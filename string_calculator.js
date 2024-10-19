@@ -8,6 +8,7 @@ class StringCalculator{
             if(numbers == ""){
                 return 0;
             }
+            let numbers_list = [];
             let sum = 0;
             //Check if string starts with //
             if(numbers.startsWith('//')){
@@ -17,7 +18,7 @@ class StringCalculator{
                 numbers = numbers.slice(numbers.indexOf('\n') + 1);
                 for(let line of numbers.split('\n')){
                     for(let number of line.split(new_delimiter)){
-                        sum += parseInt(number)
+                        numbers_list.push(parseInt(number))
                     }
                 }
             }
@@ -26,9 +27,25 @@ class StringCalculator{
                 for(let line of numbers.split('\n')){
                     //Splitting line if , delimiter encountered
                     for(let number of line.split(',')){
-                        sum += parseInt(number)
+                        numbers_list.push(parseInt(number))
                     }
                 }
+            }
+            let negativeFound = false;
+            let negativeMsg = "negative numbers not allowed ";
+            //Check for negative numbers and numbers > 1000
+            for(let num of numbers_list){
+                if(!negativeFound && parseInt(num) >= 0 && parseInt(num) <= 1000){
+                    sum += parseInt(num);
+                }
+                else if(parseInt(num) < 0){
+                    negativeFound = true;
+                    negativeMsg += num + ","
+                }
+            }
+
+            if(negativeFound){
+                throw negativeMsg.slice(0, -1);
             }
             return sum;
         }

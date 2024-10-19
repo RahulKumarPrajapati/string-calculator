@@ -30,3 +30,18 @@ test("Test Case 5 -> If string contains delimiter other than comma(,)", () => {
 test("Test Case 6 -> If string contains delimiter other than comma(,) and have more than one lines", () => {
     expect(calculator.add("//;\n1;2;3\n4;5\n6;7;8")).toBe(36)
 });
+
+// Test Case 7 -> If string contains a negative number
+test("Test Case 7 -> If string contains a negative number", () => {
+    expect(calculator.add("1,2,-3,4")).toBe("negative numbers not allowed -3")
+});
+
+// Test Case 8 -> If string contains more than one negative numbers
+test("Test Case 8 -> If string contains more than one negative numbers", () => {
+    expect(calculator.add("//;\n1;2;-3\n4;5\n-6;7;-8")).toBe("negative numbers not allowed -3,-6,-8")
+});
+
+// Test Case 9 -> If string contains a number greater than 1000
+test("Test Case 9 -> If string contains a number greater than 1000", () => {
+    expect(calculator.add("//&\n1&1001&3\n4")).toBe(8)
+});
