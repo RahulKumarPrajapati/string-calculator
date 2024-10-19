@@ -8,10 +8,13 @@ class StringCalculator{
             if(numbers == ""){
                 return 0;
             }
-            let numbers_list = numbers.split(',');
             let sum = 0;
-            for(let number of numbers_list){
-                sum += parseInt(number)
+            //Splitting string if \n encountered
+            for(let line of numbers.split('\n')){
+                //Splitting line if , delimiter encountered
+                for(let number of line.split(',')){
+                    sum += parseInt(number)
+                }
             }
             return sum;
         }
