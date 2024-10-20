@@ -1,9 +1,43 @@
 class StringCalculator{
-    constructor(){}
+    constructor(){
+        this.count = 0;
+    }
     
+    getCalledCount(){
+        return this.count;
+    }
+    
+    extractDelimiters(s) {
+        // If there is only one delimiter
+        if (!s.startsWith('[')) {
+        return [s];
+        }
+    
+        // For multiple delimiters enclosed in brackets
+        const delimiters = [];
+        const regex = /\[(.*?)\]/g;
+        let match;
+        while ((match = regex.exec(s)) !== null) {
+            delimiters.push(match[1]);
+        }
+        return delimiters;
+    }
+
+    splitByDelimiters(s, delimiters) {
+        // Escape special characters in delimiters to create a valid regex pattern
+        const escapedDelimiters = delimiters.map(d => d.replace(/[-\/\\^$*+?.!@#%]/g, '\\$&'));
+        // Join delimiters with '|' to create a single regex pattern for splitting
+        const regexPattern = new RegExp(escapedDelimiters.join('|'), 'g');
+        // Split the string using the constructed regex pattern
+        const result = s.split(regexPattern);
+        return result;
+    }
+
     // Function to implement add operation
     add(numbers){
         try{
+            //Increasing count for every add function call
+            this.count += 1;
             //If the number string is empty then return 0
             if(numbers == ""){
                 return 0;
@@ -14,12 +48,11 @@ class StringCalculator{
             if(numbers.startsWith('//')){
                 let first_new_line_index = numbers.indexOf('\n');
                 //Fetching new delimiter
-                let new_delimiter = numbers.slice(2, first_new_line_index);
+                let delimiter_list = this.extractDelimiters(numbers.slice(2, first_new_line_index));
                 numbers = numbers.slice(numbers.indexOf('\n') + 1);
                 for(let line of numbers.split('\n')){
-                    for(let number of line.split(new_delimiter)){
-                        numbers_list.push(parseInt(number))
-                    }
+                    let list = this.splitByDelimiters(line, delimiter_list);
+                    numbers_list.push(...list)
                 }
             }
             else{

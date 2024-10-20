@@ -45,3 +45,23 @@ test("Test Case 8 -> If string contains more than one negative numbers", () => {
 test("Test Case 9 -> If string contains a number greater than 1000", () => {
     expect(calculator.add("//&\n1&1001&3\n4")).toBe(8)
 });
+
+// Test Case 10 -> If string contains more than one delimiter
+test("Test Case 10 -> If string contains more than one delimiter", () => {
+    expect(calculator.add("//[;][,]\n2;10,3\n4;5\n6")).toBe(30)
+});
+
+// Test Case 11 -> If string contains delimiter of length more than 1
+test("Test Case 11 -> If string contains delimiter of length more than 1", () => {
+    expect(calculator.add("//[***]\n1***2***3")).toBe(6)
+});
+
+// Test Case 12 -> If string contains more than one delimiter of length more than 1
+test("Test Case 12 -> If string contains more than one delimiter of length more than 1", () => {
+    expect(calculator.add("//[**][%%]\n1**2%%3")).toBe(6)
+});
+
+// Test Case 13 -> Checking add function call count
+test("Test Case 13 -> Checking add function call count", () => {
+    expect(calculator.getCalledCount()).toBe(12)
+});
